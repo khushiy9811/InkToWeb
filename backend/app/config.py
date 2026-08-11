@@ -23,6 +23,15 @@ TESSERACT_CMD = os.environ.get(
 
 LOW_CONFIDENCE_THRESHOLD = 65.0
 
+# TrOCR (torch + transformers) meaningfully improves handwriting accuracy
+# but its baseline memory footprint alone exceeds free-tier hosting limits
+# (512MB on Render) once loaded — set ENABLE_TROCR=false in a constrained
+# deployment to fall back to Tesseract-only and stay within memory limits.
+# torch/transformers are only actually imported when trocr_engine.recognize_batch
+# is called (see ocr/trocr_engine.py), so leaving this off skips that import
+# entirely rather than just skipping inference.
+ENABLE_TROCR = os.environ.get("ENABLE_TROCR", "true").lower() == "true"
+
 # Comma-separated list of allowed frontend origins, e.g.
 # "https://inktoweb.vercel.app,http://localhost:5173"
 CORS_ORIGINS = [

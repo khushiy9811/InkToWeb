@@ -21,7 +21,7 @@ import numpy as np
 import pytesseract
 from PIL import Image
 
-from ..config import TESSERACT_CMD
+from ..config import TESSERACT_CMD, ENABLE_TROCR
 from . import trocr_engine
 from .template import (
     TEXT_FIELDS, CHAR_BOX_FIELDS, CHECKBOX_GROUPS, SIGNATURE_BOX, PT_TO_PX,
@@ -439,10 +439,10 @@ def extract_form_fields(img_bgr: np.ndarray):
     escalate_indices = [
         i for i, (big, (_, tess_confidence)) in enumerate(zip(crops, tess_results))
         if big is not None and tess_confidence < TROCR_ESCALATION_THRESHOLD
-    ]
+    ] if ENABLE_TROCR else []
     try:
         rgb_crops = [cv2.cvtColor(crops[i], cv2.COLOR_GRAY2RGB) for i in escalate_indices]
-        trocr_raw = trocr_engine.recognize_batch(rgb_crops)
+        trocr_raw = trocr_engine.recognize_batch(rgb_crops) if escalate_indices else []
     except Exception:
         trocr_raw = []
     trocr_by_index = dict(zip(escalate_indices, trocr_raw))
