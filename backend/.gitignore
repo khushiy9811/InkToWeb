@@ -1,0 +1,7 @@
+venv/
+__pycache__/
+*.pyc
+inktoweb.db
+uploads/*
+!uploads/.gitkeep
+.env

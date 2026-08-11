@@ -1,0 +1,32 @@
+# Backend
+backend/venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/*.pyc
+backend/inktoweb.db
+backend/uploads/*
+!backend/uploads/.gitkeep
+backend/.env
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Dev-only project brief / tooling config — not part of the app
+.claude/
+PROJECT.md
+
+# Local backups created during OCR template redesign (not needed in repo)
+bank_account_opening_form_unboxed_backup.pdf
+bank_account_opening_form_v1_backup.pdf
+
+# Test scans filled in with real personal details — local testing only
+/Sample.pdf
+/New_sample.pdf
